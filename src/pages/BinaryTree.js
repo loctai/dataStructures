@@ -54,6 +54,14 @@ const BinaryTree = () => {
     setValue();
   };
 
+  const handleGetItemLevelOrder = async () => {
+    if (!value) {
+      return;
+    }
+    await bTree.searchlevelOrderAnimation(value)
+    setValue();
+  };
+
   const handleBFS = async () => {
     await bTree.animateBreathFirstSearch();
   }
@@ -69,6 +77,14 @@ const BinaryTree = () => {
   const handleDFSPostOrder = async () => {
     await bTree.DFTPostOrder();
   }
+  const handleInsertLevelOrder = async () => {
+    if(!value){
+      return;
+    }
+    await bTree.InsertlevelOrder(Number(value));
+    setValue();
+  }
+
 
   function eyeball(event) {
     var eye = document.querySelectorAll(".eye");
@@ -129,6 +145,14 @@ const BinaryTree = () => {
           >
             Get Item
           </Button>
+          <Button
+            colorScheme="teal"
+            size="lg"
+            maxWidth="300px"
+            onClick={handleGetItemLevelOrder}
+          >
+            Get Item Level Order
+          </Button>
 
           <Button
             colorScheme="yellow"
@@ -175,6 +199,14 @@ const BinaryTree = () => {
             onClick={handleRemoveItem}
           >
             Remove Item
+          </Button>
+          <Button
+            colorScheme="green"
+            size="lg"
+            maxWidth="300px"
+            onClick={handleInsertLevelOrder}
+          >
+            Insert Level Order
           </Button>
 
         </Stack>

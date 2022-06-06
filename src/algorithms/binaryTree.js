@@ -1,5 +1,5 @@
 import $ from 'jquery';
-const wait = async () =>  await new Promise((resolve)=> setTimeout(()=> resolve(null), 500))
+const wait = async (time = 500) =>  await new Promise((resolve)=> setTimeout(()=> resolve(null), time))
 class Node {
     constructor(value, left=null, right=null){
       this.left = null;
@@ -266,6 +266,82 @@ export default class BinarySearchTree {
      }
    }
 
+   searchlevelOrderAnimation = async (value)  => {
+    let root = this.root;
+    const queue = [root];
+    
+    let loop = true
+    while (queue.length) {
+      const length = queue.length;
+      for (let i = 0; i < length; i++) {
+        const current = queue.shift();
+
+        $( `#animate${current.value}` ).css({backgroundColor: "#90ee90"});
+        $( `#animate${current.value}` ).effect( "shake" );
+        
+        
+        if(current.value == value) {
+          await wait(5000)
+          loop = false;
+          break;
+        }else{
+          await wait()
+          $( `#animate${current.value}` ).css({backgroundColor: "#ffcd00"});
+        }
+
+        if (current.left) {
+          queue.push(current.left)
+        } 
+        if (current.right) {
+          queue.push(current.right)
+        }
+  
+      }
+      if (!loop) {
+        break;
+      }
+  
+    }
+    return;
+  
+  }
+
+   InsertlevelOrder = async (value)  => {
+    let root = this.root;
+    let newNode = new Node(value)
+    const queue = [root];
+    
+    let loop = true
+    while (queue.length) {
+      const length = queue.length;
+      for (let i = 0; i < length; i++) {
+        const current = queue.shift();
+        $( `#animate${current.value}` ).css({backgroundColor: "#90ee90"});
+        $( `#animate${current.value}` ).effect( "shake" );
+        await wait()
+        $( `#animate${current.value}` ).css({backgroundColor: "#ffcd00"});
+        if (!current.left) {
+          current.left = newNode;
+          loop = false;
+          break;
+        } else if (!current.right) {
+          current.right = newNode
+          loop = false;
+          break;
+        } else {
+          queue.push(current.left)
+          queue.push(current.right)
+        }
+  
+      }
+      if (!loop) {
+        break;
+      }
+  
+    }
+    return;
+  
+  }
    animateBreathFirstSearch = async () => {
     let currentNode = this.root;
     let queue = [];
